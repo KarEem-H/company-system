@@ -15,11 +15,11 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        $managers = manager::paginate((int)request()->itemsPerPage);
+        $managers = manager::paginate((int) request()->itemsPerPage);
         return response()->json(compact('managers'), 200);
     }
 
-       /**
+    /**
      * create a new manager .
      *
      * @param  \Illuminate\Http\Request  $request
@@ -29,16 +29,16 @@ class ManagerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'department_id' =>'required|integer|exists:departments,id'
+            'department_id' => 'required|integer|exists:departments,id'
         ]);
-   
-        if($validator->fails()){
+
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        $manager=manager::create(array(
+        $manager = manager::create(array(
             'name' => $request->get('name'),
-            'department_id'=>$request->get('department_id'),
+            'department_id' => $request->get('department_id'),
         ));
 
         return response()->json(compact('manager'), 200);
@@ -56,7 +56,7 @@ class ManagerController extends Controller
         return response()->json(compact('manager'), 200);
     }
 
-    
+
     /**
      * Display a listing of the employees that were related to specified the manager.
      *
@@ -66,11 +66,8 @@ class ManagerController extends Controller
     public function indexOfRelatedEmployees(int $id)
     {
         $managerInfo = manager::findOrFail($id);
-        $listingOfRelatedEmployees=$managerInfo->employee()->paginate((int)request()->itemsPerPage);
+        $listingOfRelatedEmployees = $managerInfo->employee()->paginate((int) request()->itemsPerPage);
 
-        return response()->json(compact('managerInfo','listingOfRelatedEmployees'), 200);
+        return response()->json(compact('managerInfo', 'listingOfRelatedEmployees'), 200);
     }
-
-
-
-   }
+}
