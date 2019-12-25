@@ -38,7 +38,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('manager/{id}/profile', 'ManagerController@showProfile');
     Route::get('manager/{id}', 'ManagerController@show');
     Route::get('manager', 'ManagerController@index');
-    Route::post('manager    ', 'ManagerController@create');
+    Route::post('manager', 'ManagerController@create');
 
     Route::get('employee/{id}/profile', 'EmployeeController@showProfile');
     Route::get('employee/{id}', 'EmployeeController@show');
