@@ -19,9 +19,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
-Route::get('open', 'DataController@open');
+
+
+
+Route::get('department/{department_id}/employee', 'DepartmentController@indexOfRelatedEmployees');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
-    Route::get('closed', 'DataController@closed');
+
+    
+    Route::get('department/{id}', 'DepartmentController@show');
+    Route::get('department', 'DepartmentController@index');
+    Route::post('department', 'DepartmentController@create');
+
+
+
 });
