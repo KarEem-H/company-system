@@ -54,6 +54,18 @@ class DepartmentController extends Controller
     }
 
     /**
+     * Display the specified Department profile.
+     *
+     * @param  \App\Department  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showProfile(Department $id)
+    {
+        
+        return response()->json('profile', 200);
+    }
+
+    /**
      * Display a listing of the employees that were related to specified the department.
      *
      * @param  int  $id

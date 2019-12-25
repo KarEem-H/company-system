@@ -60,4 +60,15 @@ class EmployeeController extends Controller
         return response()->json(compact('employee'), 200);
     }
 
+    /**
+     * Display the specified Employee profile.
+     *
+     * @param  \App\Employee  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showProfile(Employee $id)
+    {
+        return response()->json('profile', 200);
+    }
+
 }

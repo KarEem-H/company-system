@@ -58,6 +58,19 @@ class ManagerController extends Controller
 
 
     /**
+     * Display the specified Manager.
+     *
+     * @param  \App\Manager  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showProfile(Manager $id)
+    {
+       
+        return response()->json('profile', 200);
+    }
+
+
+    /**
      * Display a listing of the employees that were related to specified the manager.
      *
      * @param  int  $id
@@ -70,4 +83,6 @@ class ManagerController extends Controller
 
         return response()->json(compact('managerInfo', 'listingOfRelatedEmployees'), 200);
     }
+
+    
 }
