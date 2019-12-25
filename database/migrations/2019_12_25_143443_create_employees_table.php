@@ -16,9 +16,12 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+
+            $table->bigInteger('department_id')->unsigned();
             $table->foreign('department_id')
-                ->references('id')->on('department');
-                
+                ->references('id')->on('departments');
+        
+            $table->bigInteger('manager_id')->unsigned();
             $table->foreign('manager_id')
                 ->references('id')->on('managers');
             $table->timestamps();
