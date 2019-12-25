@@ -15,7 +15,17 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = employee::paginate((int) request()->itemsPerPage);
+        $acceptVersion = Request()->header('Accept-version') ? strtolower(Request()->header('Accept-version')) : null;
+
+        switch ($acceptVersion) {
+
+            case 'v2':
+                $employees = employee::paginate((int) request()->itemsPerPage);
+                break;
+            default: {
+                    $employees = employee::all();
+                }
+        }
         return response()->json(compact('employees'), 200);
     }
 
@@ -70,5 +80,4 @@ class EmployeeController extends Controller
     {
         return response()->json('profile', 200);
     }
-
 }

@@ -15,7 +15,17 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::paginate((int)request()->itemsPerPage);
+        $acceptVersion = Request()->header('Accept-version') ? strtolower(Request()->header('Accept-version')) : null;
+
+        switch ($acceptVersion) {
+
+            case 'v2':
+                $departments = Department::paginate((int) request()->itemsPerPage);
+                break;
+            default: {
+                    $departments = Department::all();
+                }
+        }
         return response()->json(compact('departments'), 200);
     }
 
@@ -30,12 +40,12 @@ class DepartmentController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
         ]);
-   
-        if($validator->fails()){
+
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        $department=Department::create(array('name' => $request->get('name')));
+        $department = Department::create(array('name' => $request->get('name')));
 
         return response()->json(compact('department'), 200);
     }
@@ -61,7 +71,7 @@ class DepartmentController extends Controller
      */
     public function showProfile(Department $id)
     {
-        
+
         return response()->json('profile', 200);
     }
 
@@ -74,9 +84,20 @@ class DepartmentController extends Controller
     public function indexOfRelatedEmployees(int $id)
     {
         $departmentInfo = Department::findOrFail($id);
-        $listingOfRelatedEmployees=$departmentInfo->employee()->paginate((int)request()->itemsPerPage);
 
-        return response()->json(compact('departmentInfo','listingOfRelatedEmployees'), 200);
+
+        $acceptVersion = Request()->header('Accept-version') ? strtolower(Request()->header('Accept-version')) : null;
+
+        switch ($acceptVersion) {
+
+            case 'v2':
+                $listingOfRelatedEmployees = $departmentInfo->employee()->paginate((int) request()->itemsPerPage);
+                break;
+            default: {
+                    $listingOfRelatedEmployees = $departmentInfo->employee()->get();
+                }
+        }
+
+        return response()->json(compact('departmentInfo', 'listingOfRelatedEmployees'), 200);
     }
-
 }

@@ -15,7 +15,17 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        $managers = manager::paginate((int) request()->itemsPerPage);
+        $acceptVersion = Request()->header('Accept-version') ? strtolower(Request()->header('Accept-version')) : null;
+
+        switch ($acceptVersion) {
+
+            case 'v2':
+                $managers = manager::paginate((int) request()->itemsPerPage);
+                break;
+            default: {
+                    $managers = manager::all();
+                }
+        }
         return response()->json(compact('managers'), 200);
     }
 
@@ -65,7 +75,7 @@ class ManagerController extends Controller
      */
     public function showProfile(Manager $id)
     {
-       
+
         return response()->json('profile', 200);
     }
 
@@ -79,10 +89,20 @@ class ManagerController extends Controller
     public function indexOfRelatedEmployees(int $id)
     {
         $managerInfo = manager::findOrFail($id);
-        $listingOfRelatedEmployees = $managerInfo->employee()->paginate((int) request()->itemsPerPage);
 
+        $acceptVersion = Request()->header('Accept-version') ? strtolower(Request()->header('Accept-version')) : null;
+
+        switch ($acceptVersion) {
+
+            case 'v2':
+                $listingOfRelatedEmployees = $managerInfo->employee()->paginate((int) request()->itemsPerPage);
+
+                break;
+            default: {
+
+                    $listingOfRelatedEmployees = $managerInfo->employee()->get();
+                }
+        }
         return response()->json(compact('managerInfo', 'listingOfRelatedEmployees'), 200);
     }
-
-    
 }
