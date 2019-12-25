@@ -24,6 +24,8 @@ Route::post('login', 'UserController@authenticate');
 
 Route::get('department/{department_id}/employee', 'DepartmentController@indexOfRelatedEmployees');
 
+Route::get('manager/{manager_id}/employee', 'ManagerController@indexOfRelatedEmployees');
+
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
 
@@ -32,6 +34,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('department', 'DepartmentController@index');
     Route::post('department', 'DepartmentController@create');
 
+    Route::get('manager/{id}', 'ManagerController@show');
+    Route::get('manager', 'ManagerController@index');
+    Route::post('manager    ', 'ManagerController@create');
 
 
 });

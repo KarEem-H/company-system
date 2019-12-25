@@ -15,7 +15,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
+        $departments = Department::paginate((int)request()->itemsPerPage);
         return response()->json(compact('departments'), 200);
     }
 
@@ -62,7 +62,7 @@ class DepartmentController extends Controller
     public function indexOfRelatedEmployees(int $id)
     {
         $departmentInfo = Department::findOrFail($id);
-        $listingOfRelatedEmployees=$departmentInfo->employee()->get();
+        $listingOfRelatedEmployees=$departmentInfo->employee()->paginate((int)request()->itemsPerPage);
 
         return response()->json(compact('departmentInfo','listingOfRelatedEmployees'), 200);
     }
