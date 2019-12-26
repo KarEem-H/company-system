@@ -3,17 +3,18 @@
 ### 2- Project dependencies
 ### 3- Run project locally
 ### 4- Guidelines of endpoints
+### 5- Note
 
-# The company system description
+# 1- The company system description
 - a company with departments, each department have employee and manager, and their profiles (include only the word profile) can be accessed by API through JWT (JSON Web Tokens) .
 
-# Project dependencies
+# 2- Project dependencies
 - Laravel 3.0.1
 - Composer 1.9.1
 - PHP 7.3.12
 - MySql DB
 
-# Run project locally
+# 3- Run project locally
 
 **Windows users**:
 - Download and and install XAMPP: https://www.apachefriends.org/download.html
@@ -68,7 +69,7 @@ php artisan serve
 - `composer install`
 - `php artisan migrate`
 
-# Guidelines of endpoints
+# 4- Guidelines of endpoints
 
 - The Api show without authentication each department with its employees and each manager with his/her employees.
 ```
@@ -96,7 +97,12 @@ which be used with routes
 
 - GET ~/api/manager/
 ``` 
-## Note 
+# 5- Notes 
+- user can be accessed by API through JWT by sending the `Authorization` attribute at HTTP message header 
+- Authorization:  `Bearer`+`letter_spacing`+`insert_user_token_here`  
+```
+ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ.....
+```
 - the second version of API can pagination for a specific list.
 
 -  `itemsPerPage` is a URL query string parameter used at pagination process of a specific list to set number of item per the page. 
@@ -107,7 +113,7 @@ which be used with routes
  ```
  Accept-version: v2
 
- GET ~/api/department/?itemsPerPage=5&page=2
+ - GET ~/api/department/?itemsPerPage=5&page=2
 
  ```
 
